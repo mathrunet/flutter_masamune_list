@@ -1,7 +1,7 @@
 name: masamune_list
 description: >-
   Plugin for implementing the functions of list.
-version: 0.4.0
+version: 0.4.0+1
 homepage: https://mathru.net
 repository: https://github.com/mathrunet/flutter_masamune_list
 

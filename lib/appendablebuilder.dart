@@ -6,14 +6,14 @@ class AppendableBuilder extends StatefulWidget {
       Function onAdd, void Function(String id) onRemove) child;
   final Widget Function(BuildContext context, String id, Function onAdd,
       void Function(String id) onRemove) builder;
-  final int initialItemCount;
+  final Iterable<String> initialValues;
   AppendableBuilder(
       {this.child,
       @required this.builder,
       this.title,
-      this.initialItemCount = 0})
+      this.initialValues = const []})
       : assert(builder != null),
-        assert(initialItemCount != null);
+        assert(initialValues != null);
   @override
   State<StatefulWidget> createState() => _AppendableBuilderState();
 }
@@ -24,8 +24,8 @@ class _AppendableBuilderState extends State<AppendableBuilder> {
   void initState() {
     super.initState();
     this._children = {};
-    for (int i = 0; i < this.widget.initialItemCount; i++) {
-      String id = Texts.uuid;
+    for (String id in this.widget.initialValues) {
+      if (isEmpty(id)) continue;
       this._children[id] =
           this.widget.builder(context, id, this._onAdd, this._onRemove);
     }
