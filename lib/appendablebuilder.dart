@@ -35,12 +35,11 @@ class _AppendableBuilderState extends State<AppendableBuilder> {
   void didUpdateWidget(AppendableBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialValues == this.widget.initialValues) return;
-    this._children = {};
-    for (String id in this.widget.initialValues) {
-      if (isEmpty(id)) continue;
+    this.widget?.initialValues?.forEach((id) {
+      if (isEmpty(id) || this._children.containsKey(id)) return;
       this._children[id] =
           this.widget.builder(context, id, this._onAdd, this._onRemove);
-    }
+    });
     this.setState(() {});
   }
 
