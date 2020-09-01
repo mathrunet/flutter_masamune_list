@@ -32,6 +32,19 @@ class _AppendableBuilderState extends State<AppendableBuilder> {
   }
 
   @override
+  void didUpdateWidget(AppendableBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialValues == this.widget.initialValues) return;
+    this._children = {};
+    for (String id in this.widget.initialValues) {
+      if (isEmpty(id)) continue;
+      this._children[id] =
+          this.widget.builder(context, id, this._onAdd, this._onRemove);
+    }
+    this.setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (this.widget.child == null) {
       return Column(children: [
