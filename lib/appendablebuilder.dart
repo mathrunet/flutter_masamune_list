@@ -106,21 +106,27 @@ class AppendableBuilderItem extends StatelessWidget {
   /// What happens when a button is pressed.
   final Function onPressed;
 
+  /// Height of the element.
+  final double height;
+
   /// Item widget for AppendableBuilder.
   ///
   /// [icon]: Icon data.
   /// [child]: Child widget.
   /// [onPressed]: What happens when a button is pressed.
-  AppendableBuilderItem({this.onPressed, this.child, this.icon})
+  /// [height]: Height of the element.
+  AppendableBuilderItem(
+      {this.onPressed, this.child, this.icon, this.height = 80})
       : assert(child != null);
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(flex: 5, child: this.child),
       Flexible(
           flex: 1,
-          child: Align(
+          child: Container(
+              height: this.height,
               alignment: Alignment.center,
               child: IconButton(
                   onPressed: this.onPressed,
