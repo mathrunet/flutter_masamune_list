@@ -5,31 +5,34 @@ class SmallGallery extends StatelessWidget {
   /// Gallery element.
   final List<Widget> children;
 
-  /// The height of the gallery.
-  final double height;
-
   /// The number next to the gallery.
   final int crossAxisCount;
 
   /// Create a small gallery in the list.
   ///
   /// [children]: Gallery element.
-  /// [height]: The height of the gallery.
   /// [crossAxisCount]: The number next to the gallery.
-  SmallGallery(
-      {@required this.children, this.height = 200, this.crossAxisCount = 4});
+  SmallGallery({@required this.children, this.crossAxisCount = 4});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(height: this.height),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: GridView.count(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: this.crossAxisCount,
-        children: this.children,
-      ),
-    );
+    print(this.children);
+    return LayoutBuilder(builder: (context, constraints) {
+      return Container(
+        constraints: constraints,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: this.children == null || this.children.length <= 0
+            ? Container(
+                alignment: Alignment.center,
+                height: 100,
+                child: Text("No data.".localize()))
+            : GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: this.crossAxisCount,
+                children: this.children,
+              ),
+      );
+    });
   }
 }
