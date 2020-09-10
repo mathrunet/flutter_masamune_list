@@ -23,6 +23,9 @@ class RankingListTile extends StatelessWidget {
   /// Trailing tiles.
   final Widget trailing;
 
+  /// Call back on tap.
+  final Function onTap;
+
   /// List tile for ranking.
   ///
   /// [rank]: Rank.
@@ -32,6 +35,7 @@ class RankingListTile extends StatelessWidget {
   /// [image]: The tile image.
   /// [title]: Title of the tile.
   /// [trailing]: Trailing tiles.
+  /// [onTap]: Call back on tap.
   RankingListTile(
       {@required this.rank,
       this.primaryColor,
@@ -39,6 +43,7 @@ class RankingListTile extends StatelessWidget {
       this.color,
       this.image,
       this.title,
+      this.onTap,
       this.trailing});
 
   /// Build method.
@@ -46,43 +51,45 @@ class RankingListTile extends StatelessWidget {
   /// [BuildContext]: Build Context.
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            width: 60,
-            decoration: BoxDecoration(
-                border: Border(
-                    right: BorderSide(
-                        width: 1, color: context.theme.dividerColor))),
-            child: Text(this.rank.toString(),
-                style: TextStyle(
-                    color: this._getColor(context),
-                    fontWeight: this._getWeight(context),
-                    fontSize: 32),
-                textAlign: TextAlign.center),
+    return InkWell(
+        onTap: this.onTap,
+        child: Container(
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                width: 60,
+                decoration: BoxDecoration(
+                    border: Border(
+                        right: BorderSide(
+                            width: 1, color: context.theme.dividerColor))),
+                child: Text(this.rank.toString(),
+                    style: TextStyle(
+                        color: this._getColor(context),
+                        fontWeight: this._getWeight(context),
+                        fontSize: 32),
+                    textAlign: TextAlign.center),
+              ),
+              Space.width(20),
+              if (this.image != null) ...[
+                Container(
+                  width: 36,
+                  height: 36,
+                  child: CircleAvatar(
+                      backgroundColor: context.theme.disabledColor,
+                      backgroundImage: this.image),
+                ),
+                Space.width(20),
+              ],
+              Expanded(child: Text(this.title, style: TextStyle(fontSize: 18))),
+              if (this.trailing != null) ...[
+                Space.width(5),
+                Container(child: this.trailing),
+                Space.width(10),
+              ]
+            ],
           ),
-          Space.width(20),
-          if (this.image != null) ...[
-            Container(
-              width: 36,
-              height: 36,
-              child: CircleAvatar(
-                  backgroundColor: context.theme.canvasColor,
-                  backgroundImage: this.image),
-            ),
-            Space.width(20),
-          ],
-          Expanded(child: Text(this.title, style: TextStyle(fontSize: 18))),
-          if (this.trailing != null) ...[
-            Space.width(5),
-            Container(child: this.trailing),
-            Space.width(10),
-          ]
-        ],
-      ),
-    );
+        ));
   }
 
   Color _getColor(BuildContext context) {

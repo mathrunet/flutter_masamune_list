@@ -23,7 +23,7 @@ class AvatarImage extends StatelessWidget {
                 height: 120,
                 width: 120,
                 child: CircleAvatar(
-                  backgroundColor: context.theme.canvasColor,
+                  backgroundColor: context.theme.disabledColor,
                   backgroundImage: this.image,
                 )),
             if (isNotEmpty(this.label))
