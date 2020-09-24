@@ -2,6 +2,7 @@ part of masamune.list;
 
 class AppendableBuilder extends StatefulWidget {
   final String title;
+  final Color backgroundColor;
   final Widget Function(BuildContext context, List<Widget> children,
       Function onAdd, void Function(String id) onRemove) child;
   final Widget Function(BuildContext context, String id, Function onAdd,
@@ -11,6 +12,7 @@ class AppendableBuilder extends StatefulWidget {
       {this.child,
       @required this.builder,
       this.title,
+      this.backgroundColor,
       this.initialValues = const []})
       : assert(builder != null),
         assert(initialValues != null);
@@ -63,7 +65,8 @@ class _AppendableBuilderState extends State<AppendableBuilder> {
                     style: TextStyle(fontSize: 16))),
             Flexible(
                 flex: 1,
-                child: Align(
+                child: Container(
+                    color: this.widget.backgroundColor,
                     alignment: Alignment.center,
                     child: IconButton(
                       padding: const EdgeInsets.all(10),
